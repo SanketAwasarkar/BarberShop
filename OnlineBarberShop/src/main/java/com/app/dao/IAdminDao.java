@@ -1,0 +1,15 @@
+package com.app.dao;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import com.app.pojos.*;
+
+public interface IAdminDao {
+	 List<Shops> getShops();
+	
+	String addNewShop(Shops s);
+	String removeShop(int shopId);
+	String updateShop(Shops s);
+	Shops getShopByShopId(int shopId);
+}
