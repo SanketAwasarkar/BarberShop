@@ -2,36 +2,37 @@ package com.app.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.app.pojos.*;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.app.pojos.Appointments;
+import com.app.pojos.Services;
+import com.app.pojos.Shops;
+import com.app.pojos.Slots;
 @Repository
 @Transactional
 public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 
-	@Autowired SessionFactory sf;
+	@Autowired 
+	private EntityManager mgr;
 	
 	@Override
 	public String addService(Services s) {
 		
-		 Session hs=sf.getCurrentSession();
-		 hs.save(s);
+		 mgr.persist(s);
 		return "Service registered successfully : ID "+s.getServiceId();
 	}
 
 	@Override
 	public String removeService(int serviceId) {
-		Session hs = sf.getCurrentSession();
-		Services s = hs.get(Services.class,serviceId);
+	
+		Services s = mgr.find(Services.class,serviceId);
 		if (s != null) {
-			hs.delete(s);
+			mgr.remove(s);
 			return "service un-subscribed with ID " + s.getServiceId();
 		}
 		return "Service deletion failed : Invalid Vendor ID";
@@ -40,18 +41,17 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 	@Override
 	public String addSlot(Slots s) {
 		
-		 Session hs=sf.getCurrentSession();
-		 hs.save(s);
+		 mgr.persist(s);
 		return "Service registered successfully : ID "+s.getSlotId();
 		
 	}
 	
 	@Override
 	public String removeSlot(int slotId) {
-		Session hs = sf.getCurrentSession();
-		Slots s = hs.get(Slots.class,slotId);
+		
+		Slots s = mgr.find(Slots.class,slotId);
 		if (s != null) {
-			hs.delete(s);
+			mgr.remove(s);
 			return "slot un-subscribed with ID " + s.getSlotId();
 		}
 		return "Slot deletion failed : Invalid Vendor ID";
@@ -67,7 +67,7 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 		Shops s=getShopByOwnerName(ownerName);
 		String jpql = "select a from Appointments a where shopId=:sid";
 		List<Appointments> alist=new ArrayList<Appointments>();
-		alist=sf.getCurrentSession().createQuery(jpql, Appointments.class).setParameter("sid",s.getShopId()).getResultList();
+		alist=mgr.createQuery(jpql, Appointments.class).setParameter("sid",s.getShopId()).getResultList();
 		
 		return alist;
 	}
@@ -89,7 +89,7 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 	@Override
 	public Shops getShopByOwnerName(String owName) {
 		String jpql="select s from Shops s where ownerName=:owName";
-		return sf.getCurrentSession().createQuery(jpql, Shops.class).setParameter("owName",owName).getSingleResult();
+		return mgr.createQuery(jpql, Shops.class).setParameter("owName",owName).getSingleResult();
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 		Shops s=getShopByOwnerName(ownerName);
 		String jpql = "select s from Services s where shopId=:sid";
 		List<Services> slist=new ArrayList<Services>();
-		slist=sf.getCurrentSession().createQuery(jpql,Services.class).setParameter("sid",s.getShopId()).getResultList();
+		slist=mgr.createQuery(jpql,Services.class).setParameter("sid",s.getShopId()).getResultList();
 		return slist;
 	}
 	@Override
@@ -105,7 +105,7 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 		Shops s=getShopByOwnerName(ownerName);
 		String jpql = "select s from Slots s where shopId=:sid";
 		List<Slots> slist=new ArrayList<Slots>();
-		slist=sf.getCurrentSession().createQuery(jpql,Slots.class).setParameter("sid",s.getShopId()).getResultList();
+		slist=mgr.createQuery(jpql,Slots.class).setParameter("sid",s.getShopId()).getResultList();
 		return slist;
 	}
 
@@ -113,7 +113,7 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 	public Services getServicesByServiceId(int serviceId) {
 		
 		String jpql="select s from Services s where s.serviceId=:serviceid";
-		return sf.getCurrentSession().createQuery(jpql,Services.class).setParameter("serviceid",serviceId).getSingleResult();
+		return mgr.createQuery(jpql,Services.class).setParameter("serviceid",serviceId).getSingleResult();
 	
 	}
 
@@ -123,21 +123,19 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 		
 		
 		String jpql="select s from Slots s where s.slotId=:slotid";
-		return sf.getCurrentSession().createQuery(jpql,Slots.class).setParameter("slotid",slotId).getSingleResult();
+		return mgr.createQuery(jpql,Slots.class).setParameter("slotid",slotId).getSingleResult();
 	}
 
 	@Override
 	public String updateService(Services s) {
-		Session hs = sf.getCurrentSession();
-		hs.update(s);
+		mgr.persist(s);
 		return "Service Updated successfully : ID "+s.getServiceId();
 		
 	}
 
 	@Override
 	public String updateSlot(Slots s) {
-		Session hs = sf.getCurrentSession();
-		hs.update(s);
+		mgr.persist(s);
 		return "slot Updated successfully : ID "+s.getSlotId();
 		
 		

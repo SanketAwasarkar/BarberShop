@@ -1,9 +1,7 @@
 package com.app.dao;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
-import com.app.pojos.*;
+import com.app.pojos.Shops;
 
 public interface IAdminDao {
 	 List<Shops> getShops();

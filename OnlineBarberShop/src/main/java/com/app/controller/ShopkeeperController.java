@@ -1,7 +1,5 @@
 package com.app.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.app.dao.IShopkeeperDao;
-import com.app.pojos.*;
+import com.app.pojos.Services;
+import com.app.pojos.Shops;
+import com.app.pojos.Slots;
+import com.app.pojos.Users;
 
 @Controller
 @RequestMapping("/shopkeeper")
 public class ShopkeeperController {
 	
 	@Autowired 
-	IShopkeeperDao dao;
+	private IShopkeeperDao dao;
 	
 	@GetMapping("/appointments")
 	public  String getAppointmets(HttpSession hs,Model map)

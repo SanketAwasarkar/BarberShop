@@ -21,7 +21,6 @@
 						<td>Enter emailId </td>
 						<td><input type="text" name="emailId" /></td>
 					</tr>
-
 					<tr>
 						<td>Enter password</td>
 						<td><input type="text" name="password" /></td>
@@ -30,16 +29,13 @@
 					<tr>
 						<td>Enter role</td>
 						<td>customer:<input type="radio" name="role" value="customer"/></td>
-						<td>shopkeeper:<input type="radio" name="role" value="shopkeeper"/></td>
-						
+						<td>shopkeeper:<input type="radio" name="role" value="shopkeeper"/></td>		
 					</tr>
 					
 					<tr>
 						<td>Enter location</td>
 						<td><input type="text" name="location" /></td>
 					</tr>
-
-
 					<tr>
 						<td><input type="submit" value="Register New User" /></td>
 					</tr>

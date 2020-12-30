@@ -1,11 +1,10 @@
 package com.app.dao;
 
-import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,15 +17,15 @@ import com.app.pojos.Slots;
 @Transactional
 public class CustomerDaoImpl implements ICustomerDao {
 
-	private static final String Query = null;
-	@Autowired
-	private SessionFactory sf;
-
+	//private static final String Query = null;
+	@PersistenceContext 
+	private EntityManager mgr;
+	
 	@Override
 	public List<String> getShopsLocations() {
 
 		String jpql = "select distinct s.location from Shops s ";
-		return sf.getCurrentSession().createQuery(jpql, String.class).getResultList();
+		return mgr.createQuery(jpql, String.class).getResultList();
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public class CustomerDaoImpl implements ICustomerDao {
 	public List<Shops> getShopsByLocations(String location) {
 
 		String jpql = "select s from Shops s where s.location =:loc";
-		return sf.getCurrentSession().createQuery(jpql, Shops.class).setParameter("loc", location).getResultList();
+		return mgr.createQuery(jpql, Shops.class).setParameter("loc", location).getResultList();
 
 	}
 
@@ -59,14 +58,14 @@ public class CustomerDaoImpl implements ICustomerDao {
 	public List<Services> getServicesById(int shopId) {
 
 		String jpql = "select s from Services s join fetch s.shop where s.shop.shopId=:shop_Id";
-		return sf.getCurrentSession().createQuery(jpql, Services.class).setParameter("shop_Id", shopId).getResultList();
+		return mgr.createQuery(jpql, Services.class).setParameter("shop_Id", shopId).getResultList();
 	}
 
 	@Override
 	public List<Slots> getSlotsById(int shopId) {
 
 		String jpql = "select s from Slots s join fetch s.shop where s.shop.shopId=:shop_Id order by s.slotSequence";
-		List<Slots> slotlist = sf.getCurrentSession().createQuery(jpql, Slots.class).setParameter("shop_Id", shopId)
+		List<Slots> slotlist = mgr.createQuery(jpql, Slots.class).setParameter("shop_Id", shopId)
 				.getResultList();
 		System.out.println("in side dao get slots by shopid............");
 		System.out.println(slotlist);
@@ -78,14 +77,14 @@ public class CustomerDaoImpl implements ICustomerDao {
 	public Shops getShopByShopId(int shopId) {
 
 		String jpql = "select s from Shops s where s.shopId=:shopid";
-		return sf.getCurrentSession().createQuery(jpql, Shops.class).setParameter("shopid", shopId).getSingleResult();
+		return mgr.createQuery(jpql, Shops.class).setParameter("shopid", shopId).getSingleResult();
 	}
 
 	@Override
 	public Services getServicesByServiceId(int serviceId) {
 
 		String jpql = "select s from Services s where s.serviceId=:serviceid";
-		return sf.getCurrentSession().createQuery(jpql, Services.class).setParameter("serviceid", serviceId)
+		return mgr.createQuery(jpql, Services.class).setParameter("serviceid", serviceId)
 				.getSingleResult();
 
 	}
@@ -94,14 +93,14 @@ public class CustomerDaoImpl implements ICustomerDao {
 	public Slots getSlotBySlotsId(int slotId) {
 
 		String jpql = "select s from Slots s where s.slotId=:slotid";
-		return sf.getCurrentSession().createQuery(jpql, Slots.class).setParameter("slotid", slotId).getSingleResult();
+		return mgr.createQuery(jpql, Slots.class).setParameter("slotid", slotId).getSingleResult();
 	}
 
 	@Override
 	public List<Slots> getSlotsByIdChaire(int shopId) {
 
 		String jpql = "select s from Slots s join fetch s.shop where s.shop.shopId=:shop_Id and s.chaireAvilable>0 order by s.slotSequence";
-		List<Slots> slotlist = sf.getCurrentSession().createQuery(jpql, Slots.class).setParameter("shop_Id", shopId)
+		List<Slots> slotlist = mgr.createQuery(jpql, Slots.class).setParameter("shop_Id", shopId)
 				.getResultList();
 		System.out.println("in side dao get slots by shopid and chair >0............");
 		System.out.println(slotlist);
@@ -112,7 +111,7 @@ public class CustomerDaoImpl implements ICustomerDao {
 	public Slots getSlotBySlotSeqence(int slotSequence, int shopId) {
 
 		String jpql = "select s from Slots s where s.slotSequence=:slotsequence and shopId=:shopid";
-		return sf.getCurrentSession().createQuery(jpql, Slots.class).setParameter("slotsequence", slotSequence)
+		return mgr.createQuery(jpql, Slots.class).setParameter("slotsequence", slotSequence)
 				.setParameter("shopid", shopId).getSingleResult();
 
 	}
@@ -120,8 +119,8 @@ public class CustomerDaoImpl implements ICustomerDao {
 	@Override
 	public String bookAppointConfirm(Appointments appoint) {
 
-		Session hs = sf.getCurrentSession();
-		hs.save(appoint);
+		
+		mgr.persist(appoint);
 		return "Appointment Booked successfully : ID " + appoint.getAppointId();
 
 	}
@@ -135,7 +134,7 @@ public class CustomerDaoImpl implements ICustomerDao {
 		int newchair=oldchaires-1;
 		slot.setChaireAvilable(newchair);
 		
-		sf.getCurrentSession().update(slot);
+		mgr.persist(slot);
 		/*
 		 * String
 		 * jpql="update Slots s set s.chaireAvilable="+newchair+" where s.slotId="
