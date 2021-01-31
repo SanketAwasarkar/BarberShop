@@ -44,6 +44,7 @@ public class Services {
 		this.serviceDescription = serviceDescription;
 		this.servicePrice = servicePrice;
 		this.serviceDuration = serviceDuration;
+
 	}
 	
 	@Id

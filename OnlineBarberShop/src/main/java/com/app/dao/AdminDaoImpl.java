@@ -49,7 +49,7 @@ public class  AdminDaoImpl implements IAdminDao{
 	@Override
 	public String updateShop(Shops s) {
 		
-		mgr.persist(s);
+		mgr.merge(s);
 		return "Shop Updated successfully : ID "+s.getShopId();
 	}
 

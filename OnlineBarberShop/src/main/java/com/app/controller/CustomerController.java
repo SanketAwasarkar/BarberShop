@@ -191,11 +191,9 @@ public class CustomerController {
 		Services s=new Services();
 		while(itr.hasNext())
 		{
-			
 			s=itr.next();
 			s.getAppoints().add(a);
 			a.getServices().add(s);
-			
 		}
 		
 		//add Slots to appointmets object and change chair status to chaireavailable-1

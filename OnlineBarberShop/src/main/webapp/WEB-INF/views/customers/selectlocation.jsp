@@ -6,15 +6,37 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Shop Location List</title>
+  <title>Shop Location List</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-<sf:form method="post" action="selectshop">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Online Barber Shop</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+     <li><a href="<spring:url value='/user/login'/>">Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+  <sf:form method="post" action="selectshop">
 <caption><h2>Select Location</h2></caption>
-<div style="background-color: lightblue; margin: auto;" >
+<div  >
 
 		
 		<select name="location">
@@ -23,7 +45,12 @@
 		</c:forEach>
 		</select>
 	</div>
-	<input type="submit" value="submit">
+	<br/>
+	<input type="submit" class="btn btn-success" value="submit">
 	</sf:form>
+  
+</div>
+
 </body>
+
 </html>

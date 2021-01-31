@@ -25,7 +25,7 @@ public class Shops {
 	private String contactNumber;
 	private double reviews;
 	private boolean status;
-	private Set<Services> services = new HashSet<Services>();
+	private List<Services> services = new ArrayList<Services>();
 	private Set<Slots> slots = new HashSet<Slots>();
 	private List<Appointments> appointments = new ArrayList<Appointments>();
 
@@ -106,12 +106,12 @@ public class Shops {
 
 	// shop-service one-many Association
 	@LazyCollection(LazyCollectionOption.TRUE)
-	@OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, orphanRemoval = true)
-	public Set<Services> getServices() {
+	@OneToMany(mappedBy = "shop", orphanRemoval = true)
+	public List<Services> getServices() {
 		return services;
 	}
 
-	public void setServices(Set<Services> services) {
+	public void setServices(List<Services> services) {
 		this.services = services;
 	}
 

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -24,14 +27,15 @@ public class Appointments {
 	private Shops shop;
 	private Set<Services> services=new HashSet<Services>();
 	private Set<Slots> slots=new HashSet<Slots>();
-	private Date regDate;
+	
+	@Temporal(javax.persistence.TemporalType.DATE)
+	private Date regDate= new Date();
 
 	public Appointments() {
 		System.out.println("In constructor of Appointments....");
 	}
 
 	public Appointments(Date regDate) {
-
 		this.regDate = regDate;
 	}
 
@@ -91,10 +95,10 @@ public class Appointments {
 		this.slots = slots;
 	}
 	
+
 	public Date getRegDate() {
 		return regDate;
 	}
-
 
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
@@ -104,5 +108,4 @@ public class Appointments {
 	public String toString() {
 		return "Appointments [appointId=" + appointId + ", regDate=" + regDate + "]";
 	}
-
 }

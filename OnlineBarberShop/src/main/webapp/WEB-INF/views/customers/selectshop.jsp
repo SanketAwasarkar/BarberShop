@@ -5,35 +5,62 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
+
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Shop  List</title>
+  <title>Online Barber Shop</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<sf:form method="post" action="selectservices">
-<caption><h2>Select Shop</h2></caption>
-<div style="background-color: lightblue; margin: auto;" >
 
-		<h3>Location : ${sessionScope.shop_location}</h3>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Online Barber Shop</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+     
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+           <li><a href="<spring:url value='/user/login'/>">Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+ <sf:form method="post" action="selectservices">
+<caption><h2>Select Shop from ${sessionScope.shop_location}</h2></caption>
+<div >
 		<caption><h2>Shops List</h2></caption>
 		
-		
-				<table style="background-color: lightblue; margin: auto;" border="1">
+		<div class="container">
+				<table border="1" class="table table-striped table-bordered">
+	
+		<tr>
+			<th>Shop Name </th><th>Location</th><th>Mobile No</th><th>Owner Name</th><th>Reviews</th><th>Shop Open/Close </th><th>Select</th>
+		</tr>
+	
 		<c:forEach var="s" items="${requestScope.shops_list}">
 			<tr>
-				<td>shopName: ${s.shopName}</td>
-				<td>Loaction:${s.location}</td>
-				<td>MobNo:${s.contactNumber}</td>
-				<td>Owner Name:${s.ownerName}</td>
-				<td>Reviews Points:${s.reviews}</td>
-				<td>Shop Open/Close :${s.status}</td>
+				<td>${s.shopName}</td>
+				<td>${s.location}</td>
+				<td>${s.contactNumber}</td>
+				<td>${s.ownerName}</td>
+				<td>${s.reviews}</td>
+				<td>${s.status}</td>
 				<td><input type="radio" value="${s.shopId}" name="shopId"></td>
 			</tr>
 		</c:forEach>
-		
 	</table>
+	</div>
 	<%--
 	
 	<select name="shop">
@@ -43,9 +70,12 @@
 	</select>
 	
 	--%>
-		<input type="submit" value="submit">
+		<input type="submit" class="btn btn-success" value="submit">
 	</div>
 
 	</sf:form>
+ 
+</div>
+
 </body>
 </html>

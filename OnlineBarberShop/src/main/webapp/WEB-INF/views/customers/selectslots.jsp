@@ -4,20 +4,45 @@
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
+
+
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Select Slots</title>
+  <title>Online Barber Shop</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<sf:form method="post" action="bookappoint">
-	<div style="background-color: lightblue; margin: auto;" >
-		<h3>Location : ${sessionScope.shop_location}</h3>
-		<h3>Shop Name: ${sessionScope.shop.shopName}</h3>
-		<h2>Selected Services </h2>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Online Barber Shop</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+    
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+           <li><a href="<spring:url value='/user/login'/>">Log Out</a></li>
+
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+  <sf:form method="post" action="bookappoint">
+	<div  >
+	<h2>Shop Name: ${sessionScope.shop.shopName}: ${sessionScope.shop_location}</h2>
+		<h3>Selected Services </h3>
 		
-		<table style="background-color: lightblue; margin: auto;" border="1">	
+		<table border="1" class="table table-striped table-bordered">	
 			<tr>
 				
 				<th>Service Name</th><th>ServiceDescription</th><th>Service Price</th><th>Service Duration</th>
@@ -36,10 +61,10 @@
 				</c:forEach>
 		
 			</table>
-		<h2>Select Slots </h2>
-		<table style="background-color: lightblue; margin: auto;" border="1">
+		<h3>Select Slots </h3>
+		<table border="1" class="table table-striped table-bordered">
 			<tr>
-				<th>Shot Id</th><th>Shot Name</th><th>Slot Time</th><th>Available Seats</th><th>Slot Sequence </th><th>select</th>
+				<th>Slot Id</th><th>Slot Name</th><th>Slot Time</th><th>Available Seats</th><th>Slot Sequence </th><th>select</th>
 			</tr>
 		<c:forEach var="s" items="${sessionScope.slotslist}">
 		
@@ -54,9 +79,11 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<input type="submit" value="submit">
+	<input type="submit" class="btn btn-success" value="submit">
 	</div>
 
 </sf:form>
+</div>
+
 </body>
 </html>

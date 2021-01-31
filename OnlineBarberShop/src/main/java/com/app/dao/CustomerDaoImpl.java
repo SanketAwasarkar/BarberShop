@@ -51,7 +51,6 @@ public class CustomerDaoImpl implements ICustomerDao {
 
 		String jpql = "select s from Shops s where s.location =:loc";
 		return mgr.createQuery(jpql, Shops.class).setParameter("loc", location).getResultList();
-
 	}
 
 	@Override

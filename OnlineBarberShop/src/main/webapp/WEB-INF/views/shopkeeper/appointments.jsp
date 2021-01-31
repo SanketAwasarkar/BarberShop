@@ -2,20 +2,49 @@
     pageEncoding="ISO-8859-1"%>
        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+
+
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+  <title>Online Barber Shop</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<table style="background-color: lightblue; margin: auto;" border="1">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Online Barber Shop</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+   
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="<spring:url value='/user/login'/>">Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+ <table border="1" class="table table-striped table-bordered">
 
 		<caption><h2>Appointments List</h2></caption>
+		<tr>
+					<th>Appoint Id</th><th>Date</th><th>Services</th><th>Slot</th>
+				</tr>
  	<c:forEach var="a" items="${requestScope.alist}">
 			<tr>
-				<td>Appoint Id: ${a.appointId}</td>
-				<td>Registration Date: ${a.regDate}</td>
+				<td>${a.appointId}</td>
+				<td>${a.regDate}</td>
 				<c:forEach var="serv" items="${a.services}">
 				<td>${serv.serviceName}</td>
 				</c:forEach> 
@@ -23,15 +52,16 @@
 				<td>${slot.slotName}</td>
 				</c:forEach> 
 			</tr>
-		</c:forEach> 
-		
-				
+		</c:forEach> 	
 	</table>
-	<a href="<spring:url value='/shopkeeper/services'/>">Click To see Services</a><br>
-	<a href="<spring:url value='/shopkeeper/slots'/>">Click To see Slots</a><br>
+	</div>
+	<div class="container">
+	
+	<a href="<spring:url value='/shopkeeper/services'/>">Services</a><br>
+	<a href="<spring:url value='/shopkeeper/slots'/>">Slots</a><br>
 	<a href="<spring:url value='/shopkeeper/addslot'/>">Add New slot</a><br>
 	<a href="<spring:url value='/shopkeeper/addservice'/>">Add New service</a><br>
 	
-	
+</div>
 </body>
 </html>

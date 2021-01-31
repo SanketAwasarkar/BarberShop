@@ -62,18 +62,14 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 
 	@Override
 	public List<Appointments> appointmetsList(String ownerName) {
-	
-		
+
 		Shops s=getShopByOwnerName(ownerName);
-		String jpql = "select a from Appointments a where shopId=:sid";
+		String jpql = "select a from Appointments a where shop_id=:sid";
 		List<Appointments> alist=new ArrayList<Appointments>();
 		alist=mgr.createQuery(jpql, Appointments.class).setParameter("sid",s.getShopId()).getResultList();
-		
 		return alist;
 	}
 	
-	
-
 	@Override
 	public String updateService(int serviceId, Services s) {
 		// TODO Auto-generated method stub
@@ -95,7 +91,7 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 	@Override
 	public List<Services> getServiceList(String ownerName) {
 		Shops s=getShopByOwnerName(ownerName);
-		String jpql = "select s from Services s where shopId=:sid";
+		String jpql = "select s from Services s where shop_id=:sid";
 		List<Services> slist=new ArrayList<Services>();
 		slist=mgr.createQuery(jpql,Services.class).setParameter("sid",s.getShopId()).getResultList();
 		return slist;
@@ -103,7 +99,7 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 	@Override
 	public List<Slots> getSlotsList(String ownerName) {
 		Shops s=getShopByOwnerName(ownerName);
-		String jpql = "select s from Slots s where shopId=:sid";
+		String jpql = "select s from Slots s where shop_id=:sid";
 		List<Slots> slist=new ArrayList<Slots>();
 		slist=mgr.createQuery(jpql,Slots.class).setParameter("sid",s.getShopId()).getResultList();
 		return slist;
@@ -114,9 +110,7 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 		
 		String jpql="select s from Services s where s.serviceId=:serviceid";
 		return mgr.createQuery(jpql,Services.class).setParameter("serviceid",serviceId).getSingleResult();
-	
 	}
-
 
 	@Override
 	public Slots getSlotBySlotsId(int slotId) {
@@ -128,17 +122,13 @@ public  class ShopkeeperDaoImpl implements IShopkeeperDao{
 
 	@Override
 	public String updateService(Services s) {
-		mgr.persist(s);
+		mgr.merge(s);
 		return "Service Updated successfully : ID "+s.getServiceId();
-		
 	}
 
 	@Override
 	public String updateSlot(Slots s) {
-		mgr.persist(s);
+		mgr.merge(s);
 		return "slot Updated successfully : ID "+s.getSlotId();
-		
-		
 	}
-
 }

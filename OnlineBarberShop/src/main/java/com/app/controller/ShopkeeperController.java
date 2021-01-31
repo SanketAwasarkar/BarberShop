@@ -43,8 +43,6 @@ public class ShopkeeperController {
 			
 			return "/shopkeeper/appointments";
 		}
-		
-	
 	}
 	
 	
@@ -101,7 +99,6 @@ public class ShopkeeperController {
 	@GetMapping("/removeservice")
 	public String removeService(@RequestParam int sid,HttpSession hs,RedirectAttributes flashMap,Model map)
 	{
-	
 		System.out.println("in del service " + sid);
 		flashMap.addFlashAttribute("mesg", dao.removeService(sid));
 		System.out.println("Atter removed..................." + sid);
@@ -113,7 +110,6 @@ public class ShopkeeperController {
 	@GetMapping("/removeslot")
 	public String removeSlot(@RequestParam int sid,HttpSession hs,RedirectAttributes flashMap,Model map)
 	{
-	
 		System.out.println("in del slot " + sid);
 		flashMap.addFlashAttribute("mesg", dao.removeSlot(sid));
 		Users u= (Users) hs.getAttribute("user_dtls");
