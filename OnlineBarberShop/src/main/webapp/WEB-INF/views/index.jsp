@@ -52,21 +52,21 @@
       <div class="item active">
         <img src="imag2.jpg" alt="Los Angeles" style="width:100%;">
          <div class="carousel-caption">
-            <h3 class="h3-responsive">Customer satisfaction is our top priority.</h3>
+            <h3 class="h3-responsive">Giving you a legendary haircut with traditional service.</h3>
           </div>
       </div>
 
       <div class="item">
         <img src="imag3.jpg" alt="Chicago" style="width:100%;">
          <div class="carousel-caption">
-            <h3 class="h3-responsive">Giving you a legendary haircut with traditional service.</h3>
+            <h3 class="h3-responsive">Where Detail makes the Difference.</h3>
           </div>
       </div>
     
       <div class="item">
         <img src="imag4.jpg" alt="New york" style="width:100%;">
          <div class="carousel-caption">
-            <h3 class="h3-responsive">Where detail makes the difference.</h3>
+            <h3 class="h3-responsive">Customer satisfaction is our top priority.</h3>
           </div>
       </div>
     </div>
